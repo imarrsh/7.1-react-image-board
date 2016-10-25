@@ -2,13 +2,17 @@
 var _ = require('underscore');
 var React = require('react');
 
+var Form = require('./form.jsx').Form;
+
 var AppWrapper = React.createClass({
   iteratorTest: function(){
-    console.log('succesful call');
-    var stupid = this.props.collection.map(function(image){
-      console.log(image.get('imgUrl'), image.get('imgCollection'));
+    // console.log('succesful call');
+    var images = this.props.collection.map(function(image){
+      return(
+        <div key="_id" className="div">image.get('imgUrl')</div>
+      );
     });
-    return stupid;
+    return images;
   },
   render: function(){
     console.log(this.props.collection, 'data passed to appWrapper');
@@ -16,6 +20,7 @@ var AppWrapper = React.createClass({
     return( 
       <div className="wrapper">
         <AppHeader />
+        <Form />
         <GalleryWrap data={this.props.collection}/>
       </div>
     );
@@ -81,7 +86,7 @@ var GalleryItemContainer = React.createClass({
 // single item container wrap
 var GalleryWrap = React.createClass({
   render: function(){
-    console.log(this.props.data, 'data passed to GalleryWrap');
+    // console.log(this.props.data, 'data passed to GalleryWrap');
 
     // return the stuff
     return(

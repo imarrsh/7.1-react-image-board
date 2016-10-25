@@ -1,5 +1,5 @@
 // Router
-
+var _ = require('underscore');
 var Backbone = require('backbone');
 var React = require('react');
 var ReactDOM = require('react-dom');
@@ -21,20 +21,17 @@ var AppRouter = Backbone.Router.extend({
   },
   index: function(){
     // do index stuff
-
+    // get the component, pass a collection
+    // select the dom node
     ReactDOM.render(
-      // get the component, pass a collection
-      // select the dom node
-      React.createElement(
-        appWrapper,
-        {collection: this.collection} ),
+      React.createElement(appWrapper, {collection: this.collection}),
         document.getElementById('app')
     );
 
-    // this.images.add([
+    // this.collection.add([
     //   {
     //     'imgUrl': 'http://c1.staticflickr.com/4/3954/15561452832_578a271d8b_h.jpg',
-    //     'imgCaption': 'sucky suck'
+    //     'imgCaption': 'Cool Views'
     //   }
     // ]);
   }
