@@ -4,17 +4,16 @@ var Backbone = require('backbone');
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-// other project pieces
+
 // models
 var models = require('./models/image');
-// components
-var form = require('./components/form.jsx');
-var appWrapper = require('./components/listing.jsx').AppWrapper;
+// top level component
+var appWrapper = require('./components/app.jsx').AppWrapper;
 
 var AppRouter = Backbone.Router.extend({
   initialize: function(){
-    this.collection = new models.ImageCollection();
-    this.collection.fetch();
+    // this.collection = new models.ImageCollection();
+    // this.collection.fetch();
   },
   routes: {
     '': 'index'
@@ -24,7 +23,7 @@ var AppRouter = Backbone.Router.extend({
     // get the component, pass a collection
     // select the dom node
     ReactDOM.render(
-      React.createElement(appWrapper, {collection: this.collection}),
+      React.createElement(appWrapper),
         document.getElementById('app')
     );
 

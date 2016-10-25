@@ -4,6 +4,10 @@ var Backbone = require('backbone');
 
 
 var Image = Backbone.Model.extend({
+  defaults: {
+    imgUrl: '',
+    imgCaption: ''
+  },
   idAttribute: '_id'
 });
 
