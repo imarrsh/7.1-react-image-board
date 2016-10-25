@@ -12,15 +12,7 @@
 
     <div class="wrapper">
       <!-- header -->
-      <header class="add-bar">
-        <div class="container">
-          <div class="row">
-            <div class="col-xs-12">
-              <i class="add-btn glyphicon glyphicon-plus-sign"></i>
-            </div>
-          </div>
-        </div>
-      </header>
+      <header class="add-bar" style="display: none;"></header>
 
       <!-- add photo and cap form-->
       <div id="add-form-container" class="add-form-container">
@@ -29,14 +21,14 @@
             <div class="col-xs-12">
               <form id="add-form">
                 <div class="form-group">
-                  <input type="text" name="imgUrl" placeholder="Image URL" class="form-control">
+                  <input type="text" name="imgUrl" placeholder="Image URL" class="form-control" />
                 </div>
                 <div class="form-group">
                   <textarea type="text" name="imgCaption" placeholder="Image Caption" class="form-control"></textarea>
                 </div>
                 <div class="form-group right">
                   <button class="btn btn-default">Cancel</button>
-                  <input type="submit" value="Add Image" class="btn btn-success">
+                  <input type="submit" value="Add Image" class="btn btn-success" />
                 </div>
               </form>
             </div>
@@ -45,7 +37,7 @@
       </div>
 
       <!-- image gallery section-->
-      <section id="image-gallery" class="image-gallery">
+      <section id="image-gallery" class="image-gallery" style="display: none;">
 
         <div class="container">
           <div class="matte"> <!-- kinda like a well -->
