@@ -13,25 +13,30 @@ var appWrapper = require('./components/listing.jsx').AppWrapper;
 
 var AppRouter = Backbone.Router.extend({
   initialize: function(){
-    this.collection = this.images = new models.ImageCollection();
+    this.collection = new models.ImageCollection();
     this.collection.fetch();
-    // console.log(this.collection);
   },
   routes: {
     '': 'index'
   },
   index: function(){
     // do index stuff
-    console.log('index!');
 
     ReactDOM.render(
       // get the component, pass a collection
       // select the dom node
       React.createElement(
         appWrapper,
-        {collection: this.images}),
+        {collection: this.collection} ),
         document.getElementById('app')
-      );
+    );
+
+    // this.images.add([
+    //   {
+    //     'imgUrl': 'http://c1.staticflickr.com/4/3954/15561452832_578a271d8b_h.jpg',
+    //     'imgCaption': 'sucky suck'
+    //   }
+    // ]);
   }
 });
 

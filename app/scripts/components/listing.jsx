@@ -1,10 +1,18 @@
 // Listing React Component
-
+var _ = require('underscore');
 var React = require('react');
 
 var AppWrapper = React.createClass({
+  iteratorTest: function(){
+    console.log('succesful call');
+    var stupid = this.props.collection.map(function(image){
+      console.log(image.get('imgUrl'), image.get('imgCollection'));
+    });
+    return stupid;
+  },
   render: function(){
-    console.log(this.props.collection, 'appWrapper');    
+    console.log(this.props.collection, 'data passed to appWrapper');
+    console.log(this.iteratorTest());
     return( 
       <div className="wrapper">
         <AppHeader />
@@ -33,7 +41,9 @@ var AppHeader = React.createClass({
 
 var GalleryItemFigure = React.createClass({
   render: function(){
-    console.log(this.props.url, 'url');
+    console.log(this.props.data, 'data passed to GalleryItemFigure');
+    
+    // keeping this in here for now - makes me happy seeing something on screen
     return (
       <figure className="photo-card">
         <img src="http://c1.staticflickr.com/4/3954/15561452832_578a271d8b_h.jpg" alt="Storm in the Desert" className="photo" />
@@ -55,18 +65,13 @@ var GalleryItemFigure = React.createClass({
 var GalleryItemContainer = React.createClass({
   render: function(){
     var self = this;
-    console.log(this.props.data, 'GalleryItemContainer');
-
-    var dataItems = this.props.data.map(function(image){
-      return <GalleryItemFigure key={image._id} url={image.imgUrl} caption={image.imgCaption} />
-    });
-    
-    console.log(dataItems);
+    console.log(this.props.data, 'data passed to GalleryItemContainer!');
+   
     return (
       <div className="row">
         <div className="col-md-10 col-md-offset-1">
           {/* figure, img figcaption, h3, span, i+i */}
-          {dataItems}
+          <GalleryItemFigure data={this.props.data} />
         </div>
       </div>
     );
@@ -76,7 +81,7 @@ var GalleryItemContainer = React.createClass({
 // single item container wrap
 var GalleryWrap = React.createClass({
   render: function(){
-    console.log(this.props.data, 'GalleryWrap');
+    console.log(this.props.data, 'data passed to GalleryWrap');
 
     // return the stuff
     return(
@@ -85,7 +90,7 @@ var GalleryWrap = React.createClass({
         <div className="container">
           <div className="matte">
             {/* row, col, figure, img + img caption, h3, span, i+i */}
-            <GalleryItemContainer data={this.props.data}/>
+            <GalleryItemContainer data={this.props.data} />
           </div>
         </div>
       </section>
@@ -96,5 +101,7 @@ var GalleryWrap = React.createClass({
 module.exports = {
   AppWrapper: AppWrapper,
   AppHeader: AppHeader,
-  GalleryWrap: GalleryWrap
+  GalleryWrap: GalleryWrap,
+  GalleryItemContainer: GalleryItemContainer,
+  GalleryItemFigure: GalleryItemFigure
 }
