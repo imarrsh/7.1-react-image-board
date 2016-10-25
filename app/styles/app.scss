@@ -1,0 +1,76 @@
+
+// Bootstrap Variables
+$icon-font-path: '../../node_modules/bootstrap-sass/assets/fonts/bootstrap/';
+
+// Import Bootstrap
+@import '../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap';
+
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+}
+
+.add-bar{
+  padding: 10px 0;
+  background-color: #38659A;
+  .add-btn{
+    font-size: 36px;
+    color: rgba(0, 0, 0, 0.7);
+    transition: color 100ms ease-in-out;
+    &:hover {
+      color: rgba(255, 255, 255, 1);
+    }
+  }
+}
+
+.add-form-container {
+  padding: 20px 0;
+  display: none;
+}
+
+.image-gallery {
+  background-color: #EEEFEF;
+}
+
+.matte{
+  background-color: #E1E2E3;
+  padding-top: 20px;
+  padding-bottom: 100px;
+}
+
+.photo-card {
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+  h3 {
+    font-weight: normal;
+    color: #666666;
+    margin: 0;
+  }
+  .caption {
+    padding: 40px 20px;
+    background-color: #FFFFFF;  
+    &:hover .controls{
+      opacity: 1;
+    }
+  }
+  .controls {
+    float: right;
+    opacity: 0;
+    transition: opacity 100ms ease-in-out;
+    .delete{
+      color: tomato;
+    }
+    i {
+      cursor: pointer;
+    }
+  }
+}
+
+.right {
+  text-align: right;
+}
