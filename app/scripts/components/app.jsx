@@ -37,8 +37,10 @@ var AppWrapper = React.createClass({
     // changes to the collection 
     this.setState({collection: this.state.collection});
   },
-  removePhoto(){
-    console.log('remove photo fired')
+  removePhoto(imageModel){
+    // console.log('remove photo fired', imageModel);
+    imageModel.destroy();
+    this.setState({collection: this.state.collection});    
   },
   render: function(){
     // console.log(this.props.collection, 'data passed to appWrapper');
