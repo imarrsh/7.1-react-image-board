@@ -22,10 +22,14 @@ var AppWrapper = React.createClass({
     })
 
     return {
-      collection: images
+      collection: images,
+      formIsShowing: false 
     }
   },
-  addPhoto: function(model){
+  toggleForm: function(){
+    this.setState({formIsShowing: !this.state.formIsShowing})
+  },
+  addPhoto: function(imageModel){
     // call create method on the collection with
     // model data from the form
     this.state.collection.create(imageModel);
@@ -33,13 +37,16 @@ var AppWrapper = React.createClass({
     // changes to the collection 
     this.setState({collection: this.state.collection});
   },
+  removePhoto(){
+    console.log('remove photo fired')
+  },
   render: function(){
     // console.log(this.props.collection, 'data passed to appWrapper');
     return( 
       <div className="wrapper">
-        <AppHeader /> { /* app top bar */ }
-        <Form addPhoto={this.addPhoto}/> { /* app submission form */ }
-        <GalleryWrap data={this.state.collection}/> { /* app contents */ }
+        <AppHeader toggleForm={this.toggleForm} /> { /* app top bar */ }
+        {this.state.formIsShowing ? <Form addPhoto={this.addPhoto} /> : null} { /* app submission form */ }
+        <GalleryWrap data={this.state.collection} removePhoto={this.removePhoto}/> { /* app contents */ }
       </div>
     );
 
@@ -47,13 +54,17 @@ var AppWrapper = React.createClass({
 });
 
 var AppHeader = React.createClass({
+  handleFormToggle: function(e){
+    e.preventDefault();
+    this.props.toggleForm();
+  },
   render: function(){
     return (
       <header className="add-bar">
         <div className="container">
           <div className="row">
             <div className="col-xs-12">
-              <a href="">
+              <a href="" onClick={this.handleFormToggle}>
                 <i className="add-btn glyphicon glyphicon-plus-sign"></i>
               </a>
             </div>

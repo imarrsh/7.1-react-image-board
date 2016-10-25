@@ -27,12 +27,6 @@ var AppRouter = Backbone.Router.extend({
         document.getElementById('app')
     );
 
-    // this.collection.add([
-    //   {
-    //     'imgUrl': 'http://c1.staticflickr.com/4/3954/15561452832_578a271d8b_h.jpg',
-    //     'imgCaption': 'Cool Views'
-    //   }
-    // ]);
   }
 });
 

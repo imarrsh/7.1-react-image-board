@@ -5,18 +5,29 @@ var React = require('react');
 var Form = React.createClass({
   getInitialState: function(){
     // initial state form stuff
-    return null;
+    return {
+      imgUrl: '',
+      imgCaption: ''
+    };
   },
   handleSubmit : function(e){
     e.preventDefault();
     // singnal up the chain through props
-    this.props.addPhoto();
+    // that a submit event happened
+    var imageModel = {
+      imgUrl : this.state.imgUrl,
+      imgCaption : this.state.imgCaption
+    }
+    this.props.addPhoto(imageModel);
   },
-  onUrlChange(){
-    console.log('onUrlChange');
+  onUrlChange(e){
+    // when the field changes, update the state prop:
+    var urlVal = e.target.value; // get the value of the field on the event
+    this.setState({imgUrl: urlVal}); // set the state to the value of the field
   },
-  onCaptionChange(){
-    console.log('onCaptionChange');
+  onCaptionChange(e){
+    var captionVal = e.target.value;
+    this.setState({imgCaption: captionVal});
   },
   render: function(){
     return (
@@ -28,10 +39,10 @@ var Form = React.createClass({
 
               <form id="add-form" onSubmit={this.handleSubmit}>
                 <div className="form-group">
-                  <input onChange={this.onUrlChange} type="text" name="imgUrl" placeholder="Image URL" className="form-control" />
+                  <input onChange={this.onUrlChange} value={this.state.ImgUrl} type="text" name="imgUrl" placeholder="Image URL" className="form-control" />
                 </div>
                 <div className="form-group">
-                  <textarea onChange={this.onCaptionChange} type="text" name="imgCaption" placeholder="Image Caption" className="form-control"></textarea>
+                  <textarea onChange={this.onCaptionChange} value={this.state.imgCaption} type="text" name="imgCaption" placeholder="Image Caption" className="form-control"></textarea>
                 </div>
                 <div className="form-group right">
                   <button className="btn btn-default">Cancel</button>
