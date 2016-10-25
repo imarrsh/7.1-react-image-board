@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+    <title>7 1 react image board</title>
+    <link rel="stylesheet" href="css/app.css">
+  </head>
+  <body>
+
+    <div id="app"></div>
+
+    <div class="wrapper">
+      <!-- header -->
+      <header class="add-bar" style="display: none;"></header>
+
+      <!-- add photo and cap form-->
+      <div id="add-form-container" class="add-form-container">
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-12">
+              <form id="add-form">
+                <div class="form-group">
+                  <input type="text" name="imgUrl" placeholder="Image URL" class="form-control" />
+                </div>
+                <div class="form-group">
+                  <textarea type="text" name="imgCaption" placeholder="Image Caption" class="form-control"></textarea>
+                </div>
+                <div class="form-group right">
+                  <button class="btn btn-default">Cancel</button>
+                  <input type="submit" value="Add Image" class="btn btn-success" />
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- image gallery section-->
+      <section id="image-gallery" class="image-gallery" style="display: none;">
+
+        <div class="container">
+          <div class="matte"> <!-- kinda like a well -->
+
+            <div class="row">
+              <div class="col-md-10 col-md-offset-1">
+                <!-- use a figure element for the card -->
+                <figure class="photo-card">
+                  <img src="http://c1.staticflickr.com/4/3954/15561452832_578a271d8b_h.jpg" alt="Storm in the Desert" class="photo">
+                  <figcaption class="caption">
+                    <h3>
+                      Storm in the Desert
+                      <span class="controls">
+                        <i class="glyphicon glyphicon-pencil"></i>
+                        <i class="delete glyphicon glyphicon-remove"></i>
+                      </span>
+                    </h3>
+                  </figcaption>
+                </figure>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </section>
+
+
+
+    </div>
+
+    <script src="js/bundle.js"></script>
+  </body>
+</html>
