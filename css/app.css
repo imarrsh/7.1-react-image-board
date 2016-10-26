@@ -5778,8 +5778,7 @@ img {
       color: white; }
 
 .add-form-container {
-  padding: 20px 0;
-  display: none; }
+  padding: 20px 0; }
 
 .image-gallery {
   background-color: #EEEFEF; }
@@ -5791,6 +5790,8 @@ img {
 
 .photo-card {
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3); }
+  .photo-card:not(:first-child) {
+    margin-top: 30px; }
   .photo-card h3 {
     font-weight: normal;
     color: #666666;
@@ -5813,4 +5814,6 @@ img {
 .right {
   text-align: right; }
 
+.display-none {
+  display: none; }
 /*# sourceMappingURL=app.css.map */
