@@ -20,12 +20,12 @@ var Form = React.createClass({
     }
     this.props.addPhoto(imageModel);
   },
-  onUrlChange(e){
+  onUrlChange: function(e){
     // when the field changes, update the state prop:
     var urlVal = e.target.value; // get the value of the field on the event
     this.setState({imgUrl: urlVal}); // set the state to the value of the field
   },
-  onCaptionChange(e){
+  onCaptionChange: function(e){
     var captionVal = e.target.value;
     this.setState({imgCaption: captionVal});
   },
@@ -35,7 +35,7 @@ var Form = React.createClass({
         <div className="container">
 
           <div className="row">
-            <div className="col-xs-12">
+            <div className="col-sm-12">
 
               <form id="add-form" onSubmit={this.handleSubmit}>
                 <div className="form-group">

@@ -37,10 +37,13 @@ var AppWrapper = React.createClass({
     // changes to the collection 
     this.setState({collection: this.state.collection});
   },
-  removePhoto(imageModel){
+  removePhoto: function(imageModel){
     // console.log('remove photo fired', imageModel);
     imageModel.destroy();
     this.setState({collection: this.state.collection});    
+  },
+  editPhoto: function(imageModel){
+    
   },
   render: function(){
     // console.log(this.props.collection, 'data passed to appWrapper');
@@ -48,7 +51,8 @@ var AppWrapper = React.createClass({
       <div className="wrapper">
         <AppHeader toggleForm={this.toggleForm} /> { /* app top bar */ }
         {this.state.formIsShowing ? <Form addPhoto={this.addPhoto} /> : null} { /* app submission form */ }
-        <GalleryWrap data={this.state.collection} removePhoto={this.removePhoto}/> { /* app contents */ }
+        <GalleryWrap data={this.state.collection} 
+         removePhoto={this.removePhoto} editPhoto={this.editPhoto}/> 
       </div>
     );
 

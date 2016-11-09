@@ -8,7 +8,8 @@ var Image = Backbone.Model.extend({
     imgUrl: '',
     imgCaption: ''
   },
-  idAttribute: '_id'
+  idAttribute: '_id',
+  // urlRoot: 'https://tiny-lasagna-server.herokuapp.com/collections/mtimageboard'
 });
 
 var ImageCollection = Backbone.Collection.extend({
