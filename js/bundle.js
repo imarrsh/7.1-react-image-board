@@ -39,10 +39,13 @@ var AppWrapper = React.createClass({displayName: "AppWrapper",
     // changes to the collection 
     this.setState({collection: this.state.collection});
   },
-  removePhoto(imageModel){
+  removePhoto: function(imageModel){
     // console.log('remove photo fired', imageModel);
     imageModel.destroy();
     this.setState({collection: this.state.collection});    
+  },
+  editPhoto: function(imageModel){
+    
   },
   render: function(){
     // console.log(this.props.collection, 'data passed to appWrapper');
@@ -50,7 +53,8 @@ var AppWrapper = React.createClass({displayName: "AppWrapper",
       React.createElement("div", {className: "wrapper"}, 
         React.createElement(AppHeader, {toggleForm: this.toggleForm}), " ", /* app top bar */ 
         this.state.formIsShowing ? React.createElement(Form, {addPhoto: this.addPhoto}) : null, " ", /* app submission form */ 
-        React.createElement(GalleryWrap, {data: this.state.collection, removePhoto: this.removePhoto}), " "/* app contents */ 
+        React.createElement(GalleryWrap, {data: this.state.collection, 
+         removePhoto: this.removePhoto, editPhoto: this.editPhoto})
       )
     );
 
@@ -109,12 +113,12 @@ var Form = React.createClass({displayName: "Form",
     }
     this.props.addPhoto(imageModel);
   },
-  onUrlChange(e){
+  onUrlChange: function(e){
     // when the field changes, update the state prop:
     var urlVal = e.target.value; // get the value of the field on the event
     this.setState({imgUrl: urlVal}); // set the state to the value of the field
   },
-  onCaptionChange(e){
+  onCaptionChange: function(e){
     var captionVal = e.target.value;
     this.setState({imgCaption: captionVal});
   },
@@ -124,7 +128,7 @@ var Form = React.createClass({displayName: "Form",
         React.createElement("div", {className: "container"}, 
 
           React.createElement("div", {className: "row"}, 
-            React.createElement("div", {className: "col-xs-12"}, 
+            React.createElement("div", {className: "col-sm-12"}, 
 
               React.createElement("form", {id: "add-form", onSubmit: this.handleSubmit}, 
                 React.createElement("div", {className: "form-group"}, 
@@ -159,10 +163,96 @@ module.exports = {
 var _ = require('underscore');
 var React = require('react');
 
+var EditForm = React.createClass({displayName: "EditForm",
+  getInitialState: function(){
+    var model = this.props.model;
+    return {
+      model: model
+    }
+  },
+
+  handleSave: function (e) {
+    e.preventDefault();
+    var model = this.state.model;
+    model.save();
+
+    this.setState({model: model});
+    this.props.toggleEdit(e);
+  },
+
+  handleChange: function(e){
+    var model = this.state.model;
+
+    var name = e.target.name;
+    var value = e.target.value;
+
+    model.set(name, value);
+
+    this.setState({model: model});
+  },
+
+  render: function(){
+    var model = this.state.model;
+    return(
+      React.createElement("div", null, 
+        React.createElement("form", {id: "edit-form", onSubmit: this.handleSave}, 
+          React.createElement("div", {className: "form-group"}, 
+            React.createElement("input", {onChange: this.handleChange, type: "text", name: "imgUrl", defaultValue: model.get('imgUrl'), 
+              placeholder: "Image URL", className: "form-control"})
+          ), 
+          React.createElement("div", {className: "form-group"}, 
+            React.createElement("textarea", {onChange: this.handleChange, type: "text", name: "imgCaption", defaultValue: model.get('imgCaption'), 
+              placeholder: "Image Caption", className: "form-control"}
+            )
+          ), 
+          React.createElement("div", {className: "form-group right"}, 
+            React.createElement("button", {onClick: this.props.toggleEdit, className: "btn btn-default"}, "Cancel"), 
+            React.createElement("input", {type: "submit", value: "Update Image", className: "btn btn-success"})
+          )
+        )
+      )
+    );
+  }
+});
+
+
+
+var FigureInfo = React.createClass({displayName: "FigureInfo",
+  render: function(){
+    var model = this.props.model;
+      return(
+      React.createElement("h3", null, 
+        React.createElement("div", null, 
+          model.get('imgCaption'), 
+          React.createElement("span", {className: "controls"}, 
+            React.createElement("a", {onClick: this.props.toggleEdit}, 
+              React.createElement("i", {className: "glyphicon glyphicon-pencil"})
+            ), 
+            React.createElement("a", {onClick: this.props.handleRemoveClick, href: ""}, 
+              React.createElement("i", {className: "delete glyphicon glyphicon-remove"})
+            )
+          )
+        )
+      )
+    )
+  }
+});
+
 var GalleryItemFigure = React.createClass({displayName: "GalleryItemFigure",
+  getInitialState: function(){
+    return {
+      isEditing: false
+    }
+  },
   handleRemoveClick: function(e){
     e.preventDefault();
     this.props.removePhoto(this.props.data);
+  },
+
+  toggleEdit: function(e){
+    e.preventDefault();
+    // switch flipper for edit mode
+    this.setState({isEditing: !this.state.isEditing})
   },
   render: function(){
     // console.log(this.props.data, 'data passed to GalleryItemFigure');
@@ -171,17 +261,12 @@ var GalleryItemFigure = React.createClass({displayName: "GalleryItemFigure",
       React.createElement("figure", {className: "photo-card"}, 
         React.createElement("img", {src: model.get('imgUrl'), alt: model.get('imgCaption'), className: "photo"}), 
         React.createElement("figcaption", {className: "caption"}, 
-          React.createElement("h3", null, 
-            model.get('imgCaption'), 
-            React.createElement("span", {className: "controls"}, 
-              React.createElement("a", {href: ""}, 
-                React.createElement("i", {className: "glyphicon glyphicon-pencil"})
-              ), 
-              React.createElement("a", {onClick: this.handleRemoveClick, href: ""}, 
-                React.createElement("i", {className: "delete glyphicon glyphicon-remove"})
-              )
-            )
-          )
+
+          this.state.isEditing ? 
+            React.createElement(EditForm, {model: model, toggleEdit: this.toggleEdit}) :
+            React.createElement(FigureInfo, {model: model, toggleEdit: this.toggleEdit, 
+              handleRemoveClick: this.handleRemoveClick})
+
         )
       )
     );
@@ -195,9 +280,10 @@ var GalleryItemContainer = React.createClass({displayName: "GalleryItemContainer
     // console.log(this.props.data, 'data passed to GalleryItemContainer!');
     var imgBoards = this.props.data.map(function(model){
       return React.createElement(GalleryItemFigure, {
-              key: model.get('_id'), 
+              key: model.get('_id') || model.cid, 
               data: model, 
-              removePhoto: self.props.removePhoto}
+              removePhoto: self.props.removePhoto, 
+              editPhoto: self.props.editPhoto}
              )
     });
 
@@ -224,7 +310,9 @@ var GalleryWrap = React.createClass({displayName: "GalleryWrap",
         React.createElement("div", {className: "container"}, 
           React.createElement("div", {className: "matte"}, 
             /* row, col, figure, img + img caption, h3, span, i+i */
-            React.createElement(GalleryItemContainer, {data: this.props.data, removePhoto: this.props.removePhoto})
+            React.createElement(GalleryItemContainer, {data: this.props.data, 
+              removePhoto: this.props.removePhoto, 
+              editPhoto: this.props.editPhoto})
           )
         )
       )
@@ -263,7 +351,8 @@ var Image = Backbone.Model.extend({
     imgUrl: '',
     imgCaption: ''
   },
-  idAttribute: '_id'
+  idAttribute: '_id',
+  // urlRoot: 'https://tiny-lasagna-server.herokuapp.com/collections/mtimageboard'
 });
 
 var ImageCollection = Backbone.Collection.extend({

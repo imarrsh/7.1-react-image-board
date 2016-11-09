@@ -5764,6 +5764,7 @@ button.close {
   box-sizing: border-box; }
 
 img {
+  width: 100%;
   max-width: 100%; }
 
 .add-bar {
@@ -5816,4 +5817,5 @@ img {
 
 .display-none {
   display: none; }
+
 /*# sourceMappingURL=app.css.map */
